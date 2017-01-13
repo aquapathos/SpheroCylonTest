@@ -1,0 +1,19 @@
+{
+  "description": "VR BOX Controller, M+C でペアリングした場合",
+  "vendorID": 9354,
+  "productID":33382,
+
+  "axis": [
+    { "name": "axisX", "id": 0 },
+    { "name": "axisY", "id": 1 }
+  ],
+
+  "buttons": [
+    { "name": "a", "id": 8 },
+    { "name": "b", "id": 10 },
+    { "name": "c", "id": 7 },
+    { "name": "d", "id": 11 },
+    { "name": "circle", "id": 13},
+    { "name": "return", "id": 14}
+  ]
+}
