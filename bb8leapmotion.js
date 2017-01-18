@@ -3,6 +3,7 @@
 var Cylon = require("cylon");
 var Victor = require("victor");
 // var HandPosition =[0,0,0];
+var config = __dirname + "/vrbox.json"
 
 Cylon.robot({
   connections: {
@@ -11,7 +12,8 @@ Cylon.robot({
 //      uuid: '312f1375e66d4ecaadaa1488ff9bc902',
 //      uuid: '370d741d181e44688173801659a913e5',
       uuid: 'b3f511eb5b9d41689a6f17319db8947d',
-      module: "cylon-ble"
+      module: "cylon-ble",
+      joystick: { adaptor: "joystick" }
     },
 
     keyboard: { adaptor: "keyboard" },
@@ -21,7 +23,8 @@ Cylon.robot({
   devices: {
     bb8: { driver: "bb8", module: "cylon-sphero-ble" },
     keyboard: { driver: "keyboard", connection: "keyboard" },
-    leapmotion: { driver: "leapmotion", connection: "leapmotion" }
+    leapmotion: { driver: "leapmotion", connection: "leapmotion" },
+    controller: { driver:"joystick", config:config }
   },
 
   work: function (my) {
@@ -67,6 +70,39 @@ Cylon.robot({
     */
 
 
+    ["a", "b","d", "c"].forEach(function(button) {
+      my.controller.on(button + ":press", function() {
+        console.log("Button " + button + " pressed.");
+      });
+
+      my.controller.on(button + ":release", function() {
+        console.log("Button " + button + " released.");
+      });
+    });
+
+    my.controller.on("axisX:move", function(value) {
+      if(value == -1){
+        console.log("Stick 左");
+        my.bb8.roll(acc, 90);
+      }
+      else
+      if(value == 1){
+        console.log("Stick 右");
+        my.bb8.roll(acc, 270);
+      }
+    });
+
+    my.controller.on("axisY:move", function(value) {
+      if(value == -1){
+        console.log("Stick 上");
+        my.bb8.roll(acc, 0);
+        }
+      else
+      if(value == 1){
+        console.log("Stick 下");
+        my.bb8.roll(acc, 180);
+      }
+    });
 
     my.leapmotion.on("hand", function (hand) {
         var handOpen = !!hand.fingers.filter(function (f) {

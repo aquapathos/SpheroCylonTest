@@ -5,18 +5,14 @@ var config = __dirname + "/vrbox.json"
 
 Cylon.robot({
   connections: {
-    bluetooth: { adaptor: 'ble', uuid: 'da8b91fa31684c50aa04f5eda56747f6' },
-    joystick: { adaptor: "joystick" },
-    keyboard: { adaptor: "keyboard" }
-  },
+    joystick: { adaptor: "joystick" }
+    },
 
   devices: {
     controller: { driver:"joystick", config:config}
   },
 
   work: function(my) {
-
-    console.log("CONFIG",config);
 
     ["a", "b","d", "c"].forEach(function(button) {
       my.controller.on(button + ":press", function() {
@@ -29,13 +25,20 @@ Cylon.robot({
     });
 
     my.controller.on("axisX:move", function(value) {
-      console.log("Stick - X:", value);
+      if(value == -1)
+        console.log("Stick 左");
+      else
+      if(value == 1)
+        console.log("Stick 右");
     });
 
     my.controller.on("axisY:move", function(value) {
-      console.log("Stick - X:", value);
-    });a
-
+      if(value == -1)
+        console.log("Stick 上");
+      else
+      if(value == 1)
+        console.log("Stick 下");
+    });
   }
 });
 

@@ -1,4 +1,4 @@
-// var gamepad = require("./.");
+var gamepad = require("./.");
 
 // Initialize the library
 gamepad.init()
